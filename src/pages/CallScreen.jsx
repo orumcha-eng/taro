@@ -184,7 +184,10 @@ function ReadingScreen() {
         <div className="app-container">
             {/* Header */}
             <div className="animate-slide-down" style={{
-                padding: '20px',
+                paddingTop: 'max(20px, env(safe-area-inset-top) + 20px)',
+                paddingBottom: '20px',
+                paddingLeft: '20px',
+                paddingRight: '20px',
                 display: 'flex',
                 alignItems: 'center',
                 gap: '12px',
