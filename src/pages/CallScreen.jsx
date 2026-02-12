@@ -6,6 +6,7 @@ import { MasterAvatar } from '../components/MasterAvatar'
 import { generateTarotReading } from '../services/ai'
 import { requestTossIAP } from '../services/toss'
 import PaymentModal from '../components/PaymentModal'
+import { incrementConsultation } from '../services/rankingService'
 
 function pickRandomCards(count = 3) {
     const shuffled = [...allTarotCards].sort(() => Math.random() - 0.5)
@@ -112,6 +113,9 @@ function ReadingScreen() {
 
     // 실제 리딩 시작 (결제 성공 후)
     const startReading = async () => {
+        // 랭킹 카운트 증가 요청
+        incrementConsultation(master.id)
+
         setStep('loading')
 
         // 카드 뽑기

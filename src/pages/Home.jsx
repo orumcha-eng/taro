@@ -22,10 +22,24 @@ const categories = [
     { key: 'image', label: '이미지', emoji: '🪞' },
 ]
 
+import { getRanking } from '../services/rankingService'
+
 export default function Home() {
     const navigate = useNavigate()
     const [hoveredId, setHoveredId] = useState(null)
     const [activeCategory, setActiveCategory] = useState('all')
+    const [rankings, setRankings] = useState({})
+
+    useEffect(() => {
+        getRanking().then(data => {
+            const rankMap = {}
+            data.forEach(item => {
+                rankMap[item.id] = item.count
+            })
+            setRankings(rankMap)
+        })
+    }, [])
+
 
     // 오늘의 메시지 (날짜 기반)
     const today = new Date()
@@ -283,7 +297,7 @@ export default function Home() {
                                             fontSize: '10px',
                                             color: 'var(--color-text-muted)'
                                         }}>
-                                            💬 {master.consultations.toLocaleString()}건 상담
+                                            💬 {(master.consultations + (rankings[master.id] || 0)).toLocaleString()}건 상담
                                         </span>
                                         <span className="font-pixel" style={{
                                             fontSize: '8px',
