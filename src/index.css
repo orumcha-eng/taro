@@ -1,0 +1,384 @@
+@import "tailwindcss";
+
+/* ===== Neon Arcade Design Tokens ===== */
+:root {
+  --color-bg: #1a1a2e;
+  --color-bg-secondary: #16213e;
+  --color-surface: #22222e;
+  --color-surface-hover: #2a2a3a;
+  --color-text: #ffd6e8;
+  --color-text-secondary: #a08090;
+  --color-text-muted: #665570;
+  --color-primary: #ff4da6;
+  --color-primary-glow: rgba(255, 77, 166, 0.5);
+  --color-accent: #00e5ff;
+  --color-accent-glow: rgba(0, 229, 255, 0.4);
+  --color-purple: #9933ea;
+  --color-purple-glow: rgba(153, 51, 234, 0.4);
+  --color-danger: #ff3355;
+  --color-success: #00e676;
+  --color-warning: #ffd43b;
+  --color-border: rgba(255, 77, 166, 0.25);
+  --color-border-strong: rgba(255, 77, 166, 0.5);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  --shadow-neon: 0 0 15px rgba(255, 77, 166, 0.4), 0 0 30px rgba(255, 77, 166, 0.2);
+  --shadow-neon-strong: 0 0 25px rgba(255, 77, 166, 0.7), 0 0 50px rgba(255, 77, 166, 0.4);
+  --shadow-cyan: 0 0 15px rgba(0, 229, 255, 0.4);
+}
+
+/* ===== Reset & Base ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #000;
+  color: var(--color-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== Mobile Frame ===== */
+.app-container {
+  max-width: 430px;
+  height: 100%;
+  margin: 0 auto;
+  background: var(--color-bg);
+  position: relative;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* ===== Scrollbar ===== */
+.app-container::-webkit-scrollbar {
+  display: none;
+}
+
+.app-container {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ===== Font Classes ===== */
+.font-pixel {
+  font-family: 'Press Start 2P', cursive;
+}
+
+.font-korean {
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+/* ===== Neon Text ===== */
+.text-neon {
+  color: var(--color-primary);
+  text-shadow: 0 0 10px var(--color-primary-glow),
+    0 0 20px rgba(255, 77, 166, 0.3);
+}
+
+.text-neon-cyan {
+  color: var(--color-accent);
+  text-shadow: 0 0 10px var(--color-accent-glow);
+}
+
+/* ===== Arcade Card ===== */
+.arcade-card {
+  background: var(--color-surface);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 0 12px rgba(255, 77, 166, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  transition: all 0.25s ease;
+}
+
+.arcade-card:hover {
+  border-color: var(--color-border-strong);
+  box-shadow: var(--shadow-neon);
+}
+
+/* ===== Arcade Button ===== */
+.arcade-button {
+  background: linear-gradient(180deg, #ff4da6 0%, #e60073 100%);
+  border: 2px solid rgba(255, 150, 200, 0.5);
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  box-shadow: 0 4px 0 #b30059, var(--shadow-neon);
+  transition: all 0.1s ease;
+}
+
+.arcade-button:hover {
+  box-shadow: 0 4px 0 #b30059, var(--shadow-neon-strong);
+}
+
+.arcade-button:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #b30059, var(--shadow-neon);
+}
+
+/* ===== Arcade Grid Background ===== */
+.arcade-grid {
+  background-color: var(--color-bg);
+  background-image:
+    linear-gradient(rgba(255, 77, 166, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 77, 166, 0.06) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ===== Glass Effect ===== */
+.glass {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* ===== Animations ===== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes neon-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 15px rgba(255, 77, 166, 0.5), 0 0 30px rgba(255, 77, 166, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 0 30px rgba(255, 77, 166, 0.8), 0 0 60px rgba(255, 77, 166, 0.5);
+  }
+}
+
+@keyframes text-flicker {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  92% {
+    opacity: 1;
+  }
+
+  93% {
+    opacity: 0.4;
+  }
+
+  94% {
+    opacity: 1;
+  }
+
+  96% {
+    opacity: 0.6;
+  }
+
+  97% {
+    opacity: 1;
+  }
+}
+
+@keyframes pixel-bounce {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes card-flip {
+  0% {
+    transform: rotateY(0deg);
+  }
+
+  50% {
+    transform: rotateY(90deg);
+  }
+
+  100% {
+    transform: rotateY(0deg);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes sparkle {
+
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(180deg);
+  }
+}
+
+@keyframes slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-neon-pulse {
+  animation: neon-pulse 2s ease-in-out infinite;
+}
+
+.animate-text-flicker {
+  animation: text-flicker 3s linear infinite;
+}
+
+.animate-pixel-bounce {
+  animation: pixel-bounce 0.6s ease-in-out infinite;
+}
+
+.animate-card-flip {
+  animation: card-flip 0.6s ease-in-out;
+}
+
+.animate-sparkle {
+  animation: sparkle 2s ease-in-out infinite;
+}
+
+.animate-slide-right {
+  animation: slide-in-right 0.4s ease-out forwards;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255, 77, 166, 0.15) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2.5s infinite;
+}
+
+/* ===== Bottom Navigation ===== */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 430px;
+  background: rgba(26, 26, 46, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-top: 2px solid var(--color-border);
+  z-index: 100;
+  padding: 8px 0 env(safe-area-inset-bottom, 8px);
+}
+
+/* ===== Utility ===== */
+.btn-primary {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-purple) 100%);
+  color: white;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 14px 32px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: var(--shadow-neon);
+}
+
+.btn-primary:hover {
+  box-shadow: var(--shadow-neon-strong);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* ===== Scanlines overlay ===== */
+.scanlines::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg,
+      transparent,
+      transparent 2px,
+      rgba(0, 0, 0, 0.03) 2px,
+      rgba(0, 0, 0, 0.03) 4px);
+  pointer-events: none;
+}
