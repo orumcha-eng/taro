@@ -107,18 +107,21 @@ export default function Home() {
 
             {/* 카테고리 필터 탭 */}
             <div style={{
-                padding: '0 16px',
+                // padding: '0 16px', // Removed padding from container
                 marginBottom: '16px',
                 overflowX: 'auto',
                 WebkitOverflowScrolling: 'touch',
                 msOverflowStyle: 'none',
-                scrollbarWidth: 'none'
+                scrollbarWidth: 'none',
+                width: '100%', // Ensure full width
             }}>
                 <div style={{
                     display: 'flex',
                     gap: '8px',
+                    padding: '0 16px', // Moved padding here
                     paddingBottom: '2px',
-                    minWidth: 'max-content'
+                    minWidth: 'max-content',
+                    flexWrap: 'nowrap', // Force single line
                 }}>
                     {categories.map(cat => {
                         const isActive = activeCategory === cat.key
@@ -127,6 +130,7 @@ export default function Home() {
                                 key={cat.key}
                                 onClick={() => setActiveCategory(cat.key)}
                                 style={{
+                                    flexShrink: 0, // Prevent shrinking
                                     padding: '8px 14px',
                                     borderRadius: 'var(--radius-full)',
                                     border: `2px solid ${isActive ? 'var(--color-primary)' : 'var(--color-border)'}`,
