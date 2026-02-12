@@ -260,7 +260,7 @@ function ReadingScreen() {
                                 gap: '8px'
                             }}
                         >
-                            🔮 리딩 받기 (₩{master.price.toLocaleString()})
+                            🔮 리딩 받기 ({master.price === 0 ? '무료' : `₩${master.price.toLocaleString()}`})
                         </button>
                     </div>
                 )}

@@ -301,9 +301,9 @@ export default function Home() {
                                         </span>
                                         <span className="font-pixel" style={{
                                             fontSize: '8px',
-                                            color: 'var(--color-primary)'
+                                            color: master.price === 0 ? 'var(--color-accent)' : 'var(--color-primary)'
                                         }}>
-                                            ₩{master.price.toLocaleString()}
+                                            {master.price === 0 ? 'FREE' : `₩${master.price.toLocaleString()}`}
                                         </span>
                                     </div>
                                 </div>
