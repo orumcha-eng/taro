@@ -94,6 +94,27 @@ export default function Home() {
                     }}>
                         AI 마스터의 프리미엄 타로 상담
                     </p>
+
+                    {/* 무료 배너 */}
+                    <div style={{
+                        marginTop: '14px',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: '6px 16px',
+                        background: 'linear-gradient(135deg, rgba(0,229,255,0.15), rgba(153,51,234,0.15))',
+                        border: '1px solid rgba(0,229,255,0.3)',
+                        borderRadius: 'var(--radius-full)',
+                    }}>
+                        <span style={{ fontSize: '14px' }}>🎉</span>
+                        <span className="font-korean" style={{
+                            fontSize: '12px',
+                            color: 'var(--color-accent)',
+                            fontWeight: 600,
+                        }}>
+                            모든 상담 무료
+                        </span>
+                    </div>
                 </div>
             </div>
 
@@ -293,7 +314,7 @@ export default function Home() {
                                             {master.description}
                                         </p>
 
-                                        {/* 상담 건수 + 가격 */}
+                                        {/* 상담 건수 + 무료 배지 */}
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '8px' }}>
                                             <span className="font-korean" style={{
                                                 fontSize: '10px',
@@ -301,11 +322,16 @@ export default function Home() {
                                             }}>
                                                 💬 {(master.consultations + (rankings[master.id] || 0)).toLocaleString()}건 상담
                                             </span>
-                                            <span className="font-pixel" style={{
-                                                fontSize: '8px',
-                                                color: 'var(--color-accent)'
+                                            <span className="font-korean" style={{
+                                                fontSize: '10px',
+                                                color: '#00e676',
+                                                fontWeight: 700,
+                                                padding: '1px 8px',
+                                                background: 'rgba(0, 230, 118, 0.12)',
+                                                borderRadius: 'var(--radius-full)',
+                                                border: '1px solid rgba(0, 230, 118, 0.3)',
                                             }}>
-                                                FREE
+                                                무료
                                             </span>
                                         </div>
                                     </div>
