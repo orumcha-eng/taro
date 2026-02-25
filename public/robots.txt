@@ -1,0 +1,4 @@
+﻿User-agent: *
+Allow: /
+
+Sitemap: https://taro-brown-kappa.vercel.app/sitemap.xml
