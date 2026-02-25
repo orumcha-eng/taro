@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import AdBanner from '../components/AdBanner'
 
 const fortunes = [
     { emoji: '🌟', text: '오늘은 새로운 인연이 다가올 수 있는 날이에요', category: '연애' },
@@ -183,6 +184,12 @@ export default function Fortune() {
                 >
                     🔄 다른 운세 보기
                 </button>
+            )}
+
+            {revealed && (
+                <div className="animate-fade-in" style={{ width: '100%', maxWidth: '340px', marginTop: '24px' }}>
+                    <AdBanner format="auto" />
+                </div>
             )}
 
             {/* CTA */}

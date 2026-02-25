@@ -4,9 +4,9 @@ import masters from '../data/characters'
 import { allTarotCards, getCardEmoji } from '../data/tarotCards'
 import { MasterAvatar } from '../components/MasterAvatar'
 import { generateTarotReading } from '../services/ai'
-import { requestTossIAP } from '../services/toss'
-import PaymentModal from '../components/PaymentModal'
 import { incrementConsultation } from '../services/rankingService'
+import AdBanner from '../components/AdBanner'
+import InterstitialAd from '../components/InterstitialAd'
 
 function pickRandomCards(count = 3) {
     const shuffled = [...allTarotCards].sort(() => Math.random() - 0.5)
@@ -64,7 +64,7 @@ function ReadingScreen() {
     const navigate = useNavigate()
     const master = masters.find(m => m.id === parseInt(id))
 
-    // step: input -> payment_simulation (optional) -> loading -> result
+    // step: input -> watching_ad -> loading -> result
     const [step, setStep] = useState('input')
     const [story, setStory] = useState('')
     const [cards, setCards] = useState([])
@@ -146,31 +146,15 @@ function ReadingScreen() {
         setCardsRevealed(true)
     }
 
-    // 결제 요청 핸들러
-    const handlePaymentRequest = async () => {
+    // 리딩 시작 핸들러 — 전면 광고 시청 후 리딩
+    const handleStartReading = () => {
         if (!story.trim()) return
+        setStep('watching_ad')
+    }
 
-        // Toss IAP 시도
-        // SKU는 임시로 마스터 ID 기반 생성
-        const sku = `tarot_reading_${master.id}`
-
-        const result = requestTossIAP(sku, {
-            onSuccess: (data) => {
-                console.log('IAP Success:', data)
-                startReading()
-            },
-            onFailure: (error) => {
-                console.log('IAP Failed:', error)
-                // 결제 실패 시 처리 (여기선 그냥 머무름)
-                alert('결제가 취소되었거나 실패했습니다.')
-            }
-        })
-
-        // IAP가 지원되지 않는 환경(브라우저 등)이면 시뮬레이션 모달 띄우기
-        if (!result.supported) {
-            console.log('IAP not supported, falling back to simulation')
-            setStep('payment_simulation')
-        }
+    // 광고 시청 완료 후 리딩 시작
+    const handleAdComplete = () => {
+        startReading()
     }
 
     const handleReset = () => {
@@ -243,7 +227,7 @@ function ReadingScreen() {
                         </div>
 
                         <button
-                            onClick={handlePaymentRequest}
+                            onClick={handleStartReading}
                             disabled={!story.trim()}
                             className="arcade-button"
                             style={{
@@ -260,17 +244,16 @@ function ReadingScreen() {
                                 gap: '8px'
                             }}
                         >
-                            🔮 리딩 받기 ({master.price === 0 ? '무료' : `₩${master.price.toLocaleString()}`})
+                            🔮 무료 리딩 받기
                         </button>
                     </div>
                 )}
 
-                {/* Step: Payment - Simulation Fallback */}
-                {step === 'payment_simulation' && (
-                    <PaymentModal
-                        master={master}
-                        onClose={() => setStep('input')}
-                        onSuccess={startReading}
+                {/* Step: Watching Ad (전면 광고 시청) */}
+                {step === 'watching_ad' && (
+                    <InterstitialAd
+                        duration={5}
+                        onComplete={handleAdComplete}
                     />
                 )}
 
@@ -434,6 +417,11 @@ function ReadingScreen() {
                         >
                             🏠 다른 마스터 보기
                         </button>
+
+                        {/* 광고 배너 */}
+                        <div style={{ margin: '20px 0' }}>
+                            <AdBanner format="auto" />
+                        </div>
 
                         {/* Footer */}
                         <div style={{ textAlign: 'center', padding: '20px 0' }}>

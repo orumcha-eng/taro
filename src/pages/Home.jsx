@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import masters from '../data/characters'
 import { MasterAvatar } from '../components/MasterAvatar'
+import AdBanner from '../components/AdBanner'
 
 const dailyMessages = [
     { emoji: '🌟', text: '새로운 인연이 다가올 수 있는 날', category: '연애' },
@@ -198,126 +199,134 @@ export default function Home() {
                     </div>
                 ) : (
                     filteredMasters.map((master, i) => (
-                        <div key={master.id}
-                            className="animate-fade-in"
-                            style={{ animationDelay: `${i * 0.08}s`, opacity: 0, marginBottom: '12px' }}
-                        >
-                            <button
-                                onClick={() => navigate(`/reading/${master.id}`)}
-                                onMouseEnter={() => setHoveredId(master.id)}
-                                onMouseLeave={() => setHoveredId(null)}
-                                style={{
-                                    width: '100%',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: '14px',
-                                    padding: '14px',
-                                    background: hoveredId === master.id ? 'var(--color-surface-hover)' : 'var(--color-surface)',
-                                    border: `2px solid ${hoveredId === master.id ? 'rgba(255,77,166,0.5)' : 'var(--color-border)'}`,
-                                    borderRadius: 'var(--radius-lg)',
-                                    cursor: 'pointer',
-                                    textAlign: 'left',
-                                    color: 'inherit',
-                                    transition: 'all 0.25s ease',
-                                    boxShadow: hoveredId === master.id ? 'var(--shadow-neon)' : 'none',
-                                    position: 'relative',
-                                    overflow: 'hidden'
-                                }}
+                        <div key={master.id}>
+                            <div
+                                className="animate-fade-in"
+                                style={{ animationDelay: `${i * 0.08}s`, opacity: 0, marginBottom: '12px' }}
                             >
-                                {/* Master Avatar */}
-                                <div style={{
-                                    borderRadius: 'var(--radius-md)',
-                                    overflow: 'hidden',
-                                    boxShadow: hoveredId === master.id
-                                        ? '0 0 20px rgba(255,77,166,0.3)'
-                                        : '0 2px 8px rgba(0,0,0,0.3)',
-                                    border: '2px solid rgba(255,255,255,0.1)',
-                                    transition: 'all 0.25s ease',
-                                    flexShrink: 0
-                                }}>
-                                    <MasterAvatar masterId={master.id} size={52} />
-                                </div>
-
-                                {/* Info */}
-                                <div style={{ flex: 1, minWidth: 0 }}>
-                                    {/* 이름 + 전문 뱃지 */}
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '5px' }}>
-                                        <span className="font-korean" style={{
-                                            fontSize: '16px',
-                                            fontWeight: 700,
-                                            color: 'var(--color-text)'
-                                        }}>
-                                            {master.name}
-                                        </span>
-                                        <span className="font-korean" style={{
-                                            fontSize: '10px',
-                                            color: 'var(--color-accent)',
-                                            padding: '2px 8px',
-                                            background: 'rgba(0, 229, 255, 0.1)',
-                                            borderRadius: 'var(--radius-full)',
-                                            border: '1px solid rgba(0, 229, 255, 0.3)',
-                                            whiteSpace: 'nowrap',
-                                            fontWeight: 500
-                                        }}>
-                                            {master.specialty.split('·')[0].trim()}
-                                        </span>
-                                    </div>
-
-                                    {/* 해시태그 */}
-                                    {master.tags && (
-                                        <div style={{ display: 'flex', gap: '6px', marginBottom: '6px', flexWrap: 'wrap' }}>
-                                            {master.tags.map(tag => (
-                                                <span key={tag} className="font-korean" style={{
-                                                    fontSize: '10px',
-                                                    color: 'var(--color-primary)',
-                                                    opacity: 0.8
-                                                }}>
-                                                    {tag}
-                                                </span>
-                                            ))}
-                                        </div>
-                                    )}
-
-                                    {/* AI 기반 설명 */}
-                                    <p className="font-korean" style={{
-                                        fontSize: '11px',
-                                        color: 'var(--color-text-secondary)',
-                                        lineHeight: 1.5,
-                                        display: '-webkit-box',
-                                        WebkitLineClamp: 2,
-                                        WebkitBoxOrient: 'vertical',
+                                <button
+                                    onClick={() => navigate(`/reading/${master.id}`)}
+                                    onMouseEnter={() => setHoveredId(master.id)}
+                                    onMouseLeave={() => setHoveredId(null)}
+                                    style={{
+                                        width: '100%',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '14px',
+                                        padding: '14px',
+                                        background: hoveredId === master.id ? 'var(--color-surface-hover)' : 'var(--color-surface)',
+                                        border: `2px solid ${hoveredId === master.id ? 'rgba(255,77,166,0.5)' : 'var(--color-border)'}`,
+                                        borderRadius: 'var(--radius-lg)',
+                                        cursor: 'pointer',
+                                        textAlign: 'left',
+                                        color: 'inherit',
+                                        transition: 'all 0.25s ease',
+                                        boxShadow: hoveredId === master.id ? 'var(--shadow-neon)' : 'none',
+                                        position: 'relative',
                                         overflow: 'hidden'
+                                    }}
+                                >
+                                    {/* Master Avatar */}
+                                    <div style={{
+                                        borderRadius: 'var(--radius-md)',
+                                        overflow: 'hidden',
+                                        boxShadow: hoveredId === master.id
+                                            ? '0 0 20px rgba(255,77,166,0.3)'
+                                            : '0 2px 8px rgba(0,0,0,0.3)',
+                                        border: '2px solid rgba(255,255,255,0.1)',
+                                        transition: 'all 0.25s ease',
+                                        flexShrink: 0
                                     }}>
-                                        {master.description}
-                                    </p>
-
-                                    {/* 상담 건수 + 가격 */}
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '8px' }}>
-                                        <span className="font-korean" style={{
-                                            fontSize: '10px',
-                                            color: 'var(--color-text-muted)'
-                                        }}>
-                                            💬 {(master.consultations + (rankings[master.id] || 0)).toLocaleString()}건 상담
-                                        </span>
-                                        <span className="font-pixel" style={{
-                                            fontSize: '8px',
-                                            color: master.price === 0 ? 'var(--color-accent)' : 'var(--color-primary)'
-                                        }}>
-                                            {master.price === 0 ? 'FREE' : `₩${master.price.toLocaleString()}`}
-                                        </span>
+                                        <MasterAvatar masterId={master.id} size={52} />
                                     </div>
-                                </div>
 
-                                {/* Arrow */}
-                                <div style={{
-                                    color: hoveredId === master.id ? 'var(--color-primary)' : 'var(--color-text-muted)',
-                                    fontSize: '20px',
-                                    transition: 'all 0.25s ease',
-                                    flexShrink: 0
-                                }}>
-                                    ›
+                                    {/* Info */}
+                                    <div style={{ flex: 1, minWidth: 0 }}>
+                                        {/* 이름 + 전문 뱃지 */}
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '5px' }}>
+                                            <span className="font-korean" style={{
+                                                fontSize: '16px',
+                                                fontWeight: 700,
+                                                color: 'var(--color-text)'
+                                            }}>
+                                                {master.name}
+                                            </span>
+                                            <span className="font-korean" style={{
+                                                fontSize: '10px',
+                                                color: 'var(--color-accent)',
+                                                padding: '2px 8px',
+                                                background: 'rgba(0, 229, 255, 0.1)',
+                                                borderRadius: 'var(--radius-full)',
+                                                border: '1px solid rgba(0, 229, 255, 0.3)',
+                                                whiteSpace: 'nowrap',
+                                                fontWeight: 500
+                                            }}>
+                                                {master.specialty.split('·')[0].trim()}
+                                            </span>
+                                        </div>
+
+                                        {/* 해시태그 */}
+                                        {master.tags && (
+                                            <div style={{ display: 'flex', gap: '6px', marginBottom: '6px', flexWrap: 'wrap' }}>
+                                                {master.tags.map(tag => (
+                                                    <span key={tag} className="font-korean" style={{
+                                                        fontSize: '10px',
+                                                        color: 'var(--color-primary)',
+                                                        opacity: 0.8
+                                                    }}>
+                                                        {tag}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                        )}
+
+                                        {/* AI 기반 설명 */}
+                                        <p className="font-korean" style={{
+                                            fontSize: '11px',
+                                            color: 'var(--color-text-secondary)',
+                                            lineHeight: 1.5,
+                                            display: '-webkit-box',
+                                            WebkitLineClamp: 2,
+                                            WebkitBoxOrient: 'vertical',
+                                            overflow: 'hidden'
+                                        }}>
+                                            {master.description}
+                                        </p>
+
+                                        {/* 상담 건수 + 가격 */}
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '8px' }}>
+                                            <span className="font-korean" style={{
+                                                fontSize: '10px',
+                                                color: 'var(--color-text-muted)'
+                                            }}>
+                                                💬 {(master.consultations + (rankings[master.id] || 0)).toLocaleString()}건 상담
+                                            </span>
+                                            <span className="font-pixel" style={{
+                                                fontSize: '8px',
+                                                color: 'var(--color-accent)'
+                                            }}>
+                                                FREE
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    {/* Arrow */}
+                                    <div style={{
+                                        color: hoveredId === master.id ? 'var(--color-primary)' : 'var(--color-text-muted)',
+                                        fontSize: '20px',
+                                        transition: 'all 0.25s ease',
+                                        flexShrink: 0
+                                    }}>
+                                        ›
+                                    </div>
+                                </button>
+                            </div>
+                            {/* 3번째 마스터 뒤에 광고 삽입 */}
+                            {i === 2 && (
+                                <div style={{ marginBottom: '12px' }}>
+                                    <AdBanner format="auto" />
                                 </div>
-                            </button>
+                            )}
                         </div>
                     ))
                 )}
