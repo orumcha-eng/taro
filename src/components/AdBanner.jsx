@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 /**
  * Google AdSense 광고 배너 컴포넌트
+ * 광고가 로드되지 않으면 숨김 처리
  * 
  * @param {'banner' | 'rectangle' | 'article'} format - 광고 형식
  * @param {string} slot - 광고 슬롯 번호 (애드센스에서 생성)
@@ -10,6 +11,7 @@ import { useEffect, useRef } from 'react'
 export default function AdBanner({ format = 'auto', slot, style = {} }) {
     const adRef = useRef(null)
     const isLoaded = useRef(false)
+    const [adAvailable, setAdAvailable] = useState(false)
 
     useEffect(() => {
         // 이미 로드된 광고는 다시 로드하지 않음
@@ -19,17 +21,32 @@ export default function AdBanner({ format = 'auto', slot, style = {} }) {
             if (window.adsbygoogle && adRef.current) {
                 window.adsbygoogle.push({})
                 isLoaded.current = true
+
+                // 광고 로드 후 실제 콘텐츠가 있는지 확인 (약간 딜레이)
+                setTimeout(() => {
+                    if (adRef.current) {
+                        const adElement = adRef.current
+                        const hasContent = adElement.getAttribute('data-ad-status') === 'filled'
+                            || adElement.querySelector('iframe')
+                            || adElement.childElementCount > 0
+                        setAdAvailable(hasContent)
+                    }
+                }, 2000)
             }
         } catch (e) {
             console.log('AdSense load error:', e)
+            setAdAvailable(false)
         }
     }, [])
+
+    // 광고가 없으면 아무것도 렌더링하지 않음
+    if (!adAvailable && isLoaded.current) return null
 
     return (
         <div style={{
             width: '100%',
             padding: '8px 0',
-            display: 'flex',
+            display: adAvailable ? 'flex' : 'none',
             justifyContent: 'center',
             ...style
         }}>
