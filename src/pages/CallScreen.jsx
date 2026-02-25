@@ -6,7 +6,7 @@ import { MasterAvatar } from '../components/MasterAvatar'
 import { generateTarotReading } from '../services/ai'
 import { incrementConsultation } from '../services/rankingService'
 import AdBanner from '../components/AdBanner'
-import InterstitialAd from '../components/InterstitialAd'
+
 
 function pickRandomCards(count = 3) {
     const shuffled = [...allTarotCards].sort(() => Math.random() - 0.5)
@@ -64,7 +64,7 @@ function ReadingScreen() {
     const navigate = useNavigate()
     const master = masters.find(m => m.id === parseInt(id))
 
-    // step: input -> watching_ad -> loading -> result
+    // step: input -> loading -> result
     const [step, setStep] = useState('input')
     const [story, setStory] = useState('')
     const [cards, setCards] = useState([])
@@ -146,14 +146,9 @@ function ReadingScreen() {
         setCardsRevealed(true)
     }
 
-    // 리딩 시작 핸들러 — 전면 광고 시청 후 리딩
+    // 리딩 시작 핸들러 (무료)
     const handleStartReading = () => {
         if (!story.trim()) return
-        setStep('watching_ad')
-    }
-
-    // 광고 시청 완료 후 리딩 시작
-    const handleAdComplete = () => {
         startReading()
     }
 
@@ -249,13 +244,7 @@ function ReadingScreen() {
                     </div>
                 )}
 
-                {/* Step: Watching Ad (전면 광고 시청) */}
-                {step === 'watching_ad' && (
-                    <InterstitialAd
-                        duration={5}
-                        onComplete={handleAdComplete}
-                    />
-                )}
+
 
                 {/* Step: Loading */}
                 {step === 'loading' && (

@@ -38,12 +38,23 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-html,
-body,
-#root {
+html {
   height: 100%;
   width: 100%;
-  overflow: hidden;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* iOS 웹뷰 부드러운 스크롤 */
+}
+
+#root {
+  min-height: 100%;
+  width: 100%;
 }
 
 body {
@@ -56,11 +67,10 @@ body {
 /* ===== Mobile Frame ===== */
 .app-container {
   max-width: 430px;
-  height: 100%;
+  min-height: 100%;
   margin: 0 auto;
   background: var(--color-bg);
   position: relative;
-  overflow-y: auto;
   overflow-x: hidden;
 }
 
