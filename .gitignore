@@ -8,3 +8,4 @@ dist
 
 # Toss In-App bundle
 *.ait
+.vercel
