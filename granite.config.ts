@@ -5,7 +5,8 @@ export default defineConfig({
   brand: {
     displayName: 'AI 시크릿 타로',
     primaryColor: '#ff4da6',
-    icon: '', // TODO: 앱 아이콘 이미지 URL 등록
+    // Brand logo shown in Toss mini-app navigation bar
+    icon: 'https://taro-brown-kappa.vercel.app/images/master_1.png',
   },
   web: {
     host: 'localhost',
